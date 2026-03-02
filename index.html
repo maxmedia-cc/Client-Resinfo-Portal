@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Intake Form | MaxMedia Creatives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900 min-h-screen py-10 px-4">
+
+    <div id="loading-overlay" class="hidden fixed inset-0 bg-gray-900 z-50 flex flex-col items-center justify-center text-white backdrop-blur-sm">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-emerald-500 mb-6"></div>
+        <h2 class="text-2xl font-bold mb-2">Securing Document...</h2>
+        <p class="text-gray-400 text-center px-4">Please wait. Do not close this window.</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+        
+        <div class="bg-gray-900 text-white p-10 text-center border-b-4 border-emerald-500">
+            <h1 class="text-4xl font-black tracking-tighter text-white mb-2">MAXMEDIA <span class="text-emerald-400">CREATIVES</span></h1>
+            <p class="text-gray-400 font-semibold tracking-widest text-sm uppercase">POS Software Development Intake</p>
+        </div>
+
+        <form id="maxmedia-form" action="https://formsubmit.co/cc.maxmedia@gmail.com" method="POST" enctype="multipart/form-data" class="p-10 md:p-14" onsubmit="generateAndSend(event)">
+            
+            <input type="hidden" name="_subject" value="New POS Setup Request + Attachments">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="file" id="hidden-pdf-input" name="Setup_Document_PDF" class="hidden">
+
+            <p class="mb-10 text-gray-600 text-lg border-l-4 border-emerald-500 pl-4 bg-gray-50 py-3 rounded-r-lg">
+                Please fill out the following details so our development team can perfectly customize your Point of Sale (POS) software.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Full Name (For Signature) *</label><input type="text" id="Client_Name" name="Client_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Email *</label><input type="email" name="Client_Email" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">1. Business Information</h3></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Restaurant Name *</label><input type="text" id="Restaurant_Name" name="Restaurant_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Full Address *</label><input type="text" id="Address" name="Address" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Contact Number(s) *</label><input type="text" id="Phone_Number" name="Phone_Number" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">GSTIN (Optional)</label><input type="text" id="GSTIN" name="GSTIN" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">2. Floor Plan & Order Types</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Total Number of Tables *</label><input type="number" id="Total_Tables" name="Total_Tables" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Specific Zones (e.g., AC/Non-AC) *</label><input type="text" id="Zones" name="Zones" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-3">Order Types Required</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-dine" name="Order_DineIn" value="Yes" class="w-5 h-5 text-emerald-600"> Dine-In</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-parcel" name="Order_Parcel" value="Yes" class="w-5 h-5 text-emerald-600"> Takeaway / Parcel</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-zomato" name="Order_Zomato" value="Yes" class="w-5 h-5 text-emerald-600"> Zomato</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-swiggy" name="Order_Swiggy" value="Yes" class="w-5 h-5 text-emerald-600"> Swiggy</label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">3. Tax & Billing Settings</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Standard GST (%)</label><input type="text" id="GST" name="GST_Percentage" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Service Charge (%)</label><input type="text" id="Service_Charge" name="Service_Charge" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Any parcel/packing charges?</label><input type="text" id="Packing_Charges" name="Packing_Charges" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">4. Kitchen Routing (KOT)</h3></div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-3">How many kitchen printers do you use?</label>
+                    <div class="flex flex-col gap-3 mb-4">
+                        <label class="flex items-center gap-2"><input type="radio" name="Kitchen_Printers" id="kot-main" value="1 (Main Kitchen Only)" class="w-5 h-5 text-emerald-600" checked> 1 (Main Kitchen Only)</label>
+                        <label class="flex items-center gap-2"><input type="radio" name="Kitchen_Printers" id="kot-multi" value="Multiple" class="w-5 h-5 text-emerald-600"> Multiple (e.g., Bar, Tandoor, Chinese)</label>
+                    </div>
+                </div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">If multiple, list stations:</label><input type="text" id="Kitchen_Stations" name="Kitchen_Stations" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">5. Menu & Admin Access</h3></div>
+                <div class="md:col-span-2">
+                    <label class="flex items-start gap-3 mb-4">
+                        <input type="checkbox" required class="w-5 h-5 mt-1 text-emerald-600">
+                        <span class="text-sm font-semibold text-gray-700">I will provide a copy of my Menu (with prices and categories) to the developer.</span>
+                    </label>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Desired Admin Password *</label>
+                    <input type="text" id="Admin_Password" name="Admin_Password" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none mb-2">
+                </div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">6. Additional Information</h3></div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Any extra requirements or notes?</label>
+                    <textarea id="Additional_Information" name="Additional_Information" rows="4" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none mb-6"></textarea>
+
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Attach Menu File (PDF, JPG, PNG) *</label>
+                    <div class="w-full p-8 border-2 border-dashed border-emerald-300 rounded-xl bg-emerald-50 text-center hover:bg-emerald-100 transition">
+                        <input type="file" name="Menu_Attachment" id="Menu_Attachment" accept="image/*, application/pdf" required class="w-full text-emerald-900 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-600 file:text-white cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-5 rounded-xl shadow-lg transition text-lg tracking-wide uppercase">
+                Submit & Sign Document
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Fetch signature from GitHub securely
+        async function getBase64ImageFromUrl(imageUrl) {
+            try {
+                const res = await fetch(imageUrl);
+                const blob = await res.blob();
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.readAsDataURL(blob);
+                });
+            } catch (e) {
+                return null; 
+            }
+        }
+
+        async function generateAndSend(event) {
+            // Stop form from submitting before PDF is ready
+            event.preventDefault(); 
+            const form = event.target;
+            
+            // Show Loading Screen
+            document.getElementById('loading-overlay').classList.remove('hidden');
+
+            try {
+                // Initialize jsPDF Engine
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+                
+                // Form Data Extraction
+                const restName = document.getElementById('Restaurant_Name').value;
+                const clientName = document.getElementById('Client_Name').value;
+                const address = document.getElementById('Address').value;
+                const phone = document.getElementById('Phone_Number').value;
+                const gstin = document.getElementById('GSTIN').value;
+                const tables = document.getElementById('Total_Tables').value;
+                const zones = document.getElementById('Zones').value;
+                
+                const cDine = document.getElementById('chk-dine').checked;
+                const cParcel = document.getElementById('chk-parcel').checked;
+                const cZomato = document.getElementById('chk-zomato').checked;
+                const cSwiggy = document.getElementById('chk-swiggy').checked;
+                
+                const gst = document.getElementById('GST').value;
+                const service = document.getElementById('Service_Charge').value;
+                const packing = document.getElementById('Packing_Charges').value;
+                const kotMain = document.getElementById('kot-main').checked;
+                const kotMulti = document.getElementById('kot-multi').checked;
+                const stations = document.getElementById('Kitchen_Stations').value;
+                const password = document.getElementById('Admin_Password').value;
+                const additional = document.getElementById('Additional_Information').value;
+
+                let today = new Date();
+                let dateStr = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+
+                // ---------------- UI HELPERS ----------------
+                function drawSectionHeader(title, yPos) {
+                    doc.setFillColor(243, 244, 246);
+                    doc.rect(15, yPos - 5, 180, 8, 'F');
+                    doc.setFillColor(5, 150, 105);
+                    doc.rect(15, yPos - 5, 2, 8, 'F');
+                    doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(17, 24, 39);
+                    doc.text(title, 20, yPos);
+                    doc.setTextColor(0, 0, 0); 
+                }
+
+                function drawCheckbox(x, yPos, isChecked, label) {
+                    doc.setDrawColor(100, 100, 100); doc.setLineWidth(0.3);
+                    doc.rect(x, yPos - 3, 3.5, 3.5); 
+                    if (isChecked) {
+                        doc.setFont("helvetica", "bold"); doc.setTextColor(5, 150, 105);
+                        doc.text("X", x + 0.6, yPos - 0.2);
+                        doc.setTextColor(0, 0, 0);
+                    }
+                    doc.setFont("helvetica", "normal");
+                    doc.text(label, x + 5, yPos);
+                }
+
+                function drawField(label, value, x, yPos, lineW) {
+                    doc.setFont("helvetica", "bold");
+                    doc.text(label, x, yPos);
+                    let lWidth = doc.getTextWidth(label);
+                    doc.setFont("helvetica", "normal");
+                    doc.text(value || " ", x + lWidth + 2, yPos);
+                    
+                    doc.setDrawColor(200, 200, 200); doc.setLineWidth(0.2);
+                    doc.line(x + lWidth + 1, yPos + 1.5, x + lWidth + 2 + lineW, yPos + 1.5);
+                }
+
+                // ---------------- DRAWING THE PDF ----------------
+                let y = 20;
+
+                // Header
+                doc.setFont("helvetica", "bold"); doc.setFontSize(22);
+                doc.text("MAXMEDIA CREATIVES", 15, y);
+                doc.setFontSize(10); doc.setTextColor(100, 100, 100);
+                doc.text("POS SOFTWARE DEVELOPMENT", 15, y + 5);
+                
+                doc.setTextColor(5, 150, 105); doc.setFontSize(14); doc.setFont("helvetica", "bold");
+                doc.text("CLIENT INTAKE FORM", 195, y, { align: "right" });
+                doc.setTextColor(0, 0, 0); doc.setFontSize(10); doc.setFont("helvetica", "normal");
+                doc.text("Date: " + dateStr, 195, y + 5, { align: "right" });
+
+                y += 15;
+                doc.setDrawColor(200, 200, 200); doc.setLineWidth(0.5);
+                doc.line(15, y, 195, y); y += 8;
+
+                doc.text("Please fill out the following details so our development team can perfectly customize your Point of", 15, y); y += 5;
+                doc.text("Sale (POS) software to match your restaurant's daily operations.", 15, y); y += 12;
+
+                // Section 1
+                drawSectionHeader("1. BUSINESS INFORMATION (FOR RECEIPTS)", y); y += 8;
+                drawField("Restaurant Name:", restName, 15, y, 140); y += 8;
+                drawField("Full Address:", address, 15, y, 140); y += 8;
+                drawField("Contact Number(s):", phone, 15, y, 140); y += 8;
+                drawField("GSTIN (Optional):", gstin, 15, y, 140); y += 14;
+
+                // Section 2
+                drawSectionHeader("2. FLOOR PLAN & ORDER TYPES", y); y += 8;
+                drawField("Total Number of Tables:", tables, 15, y, 40); y += 8;
+                drawField("Specific Zones (e.g., AC/Non-AC):", zones, 15, y, 100); y += 10;
+                
+                doc.setFont("helvetica", "bold"); doc.text("Order Types Required (Tick all that apply):", 15, y); y += 6;
+                drawCheckbox(15, y, cDine, "Dine-In");
+                drawCheckbox(45, y, cParcel, "Takeaway / Parcel");
+                drawCheckbox(85, y, cZomato, "Zomato");
+                drawCheckbox(110, y, cSwiggy, "Swiggy"); y += 14;
+
+                // Section 3
+                drawSectionHeader("3. TAX & BILLING SETTINGS", y); y += 8;
+                drawField("Standard GST (%):", gst || "0%", 15, y, 40);
+                drawField("Service Charge (%):", service || "0%", 100, y, 40); y += 8;
+                drawField("Any parcel/packing charges?:", packing, 15, y, 100); y += 14;
+
+                // Section 4
+                drawSectionHeader("4. KITCHEN ROUTING (KOT)", y); y += 8;
+                doc.setFont("helvetica", "bold"); doc.text("How many kitchen printers do you use?", 15, y); y += 6;
+                drawCheckbox(15, y, kotMain, "1 (Main Kitchen Only)");
+                drawCheckbox(60, y, kotMulti, "Multiple (e.g., Bar, Tandoor, Chinese)"); y += 8;
+                drawField("If multiple, list stations:", stations, 15, y, 120); y += 14;
+
+                // Section 5
+                drawSectionHeader("5. MENU & ADMIN ACCESS", y); y += 8;
+                drawCheckbox(15, y, true, "I will provide a copy of my Menu (with prices and categories) to the developer."); y += 8;
+                drawField("Desired Admin Password:", password, 15, y, 100); y += 6;
+                doc.setFont("helvetica", "italic"); doc.setFontSize(8); doc.setTextColor(100, 100, 100);
+                doc.text("This password will be used to access daily sales reports and edit the menu in your software.", 15, y);
+                doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(0, 0, 0); y += 14;
+
+                // Section 6
+                drawSectionHeader("6. ADDITIONAL INFORMATION", y); y += 8;
+                const splitAdditional = doc.splitTextToSize(additional || "None provided.", 180);
+                doc.text(splitAdditional, 15, y);
+                y += (splitAdditional.length * 5) + 20;
+
+                // Check Page Break
+                if (y > 250) { doc.addPage(); y = 30; }
+
+                // Signatures
+                doc.setDrawColor(0, 0, 0); doc.setLineWidth(0.5);
+                doc.line(15, y, 80, y); // Client Line
+                doc.line(130, y, 195, y); // MaxMedia Line
+                
+                y += 5;
+                doc.setFont("helvetica", "bold");
+                doc.text("Digitally signed by " + clientName, 15, y);
+                doc.text("Omkar Harale, Creative Head", 130, y);
+                
+                y += 5;
+                doc.setFont("helvetica", "normal");
+                doc.text(restName, 15, y);
+                doc.text("MaxMedia Creatives", 130, y);
+
+                // Fetch your signature directly from Github and place it!
+                const sigBase64 = await getBase64ImageFromUrl('Onkar Signature New_1.jpg');
+                if(sigBase64) {
+                    doc.addImage(sigBase64, 'JPEG', 140, y - 25, 35, 15);
+                }
+
+                // ---------------- OUTPUT & NATIVE SUBMIT ----------------
+                const pdfFileName = `MaxMedia_Intake_${restName.replace(/\s+/g, '_')}.pdf`;
+                
+                // Trigger Download
+                doc.save(pdfFileName);
+                
+                // Attach the generated PDF into the form as a physical File
+                const pdfBlob = doc.output('blob');
+                const dataTransfer = new DataTransfer();
+                const pdfFile = new File([pdfBlob], pdfFileName, { type: "application/pdf" });
+                dataTransfer.items.add(pdfFile); 
+                document.getElementById('hidden-pdf-input').files = dataTransfer.files;
+
+                // Native Submission! 
+                // This guarantees FormSubmit accepts it because it looks exactly like a normal form submit.
+                setTimeout(() => {
+                    HTMLFormElement.prototype.submit.call(form);
+                }, 500);
+
+            } catch (error) {
+                console.error("PDF Generation Error: ", error);
+                alert("An error occurred generating your document. Please try again.");
+                document.getElementById('loading-overlay').classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
