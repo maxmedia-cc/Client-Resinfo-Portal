@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Intake Form | MaxMedia Creatives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900 min-h-screen py-10 px-4 relative">
+
+    <div id="loading-overlay" class="hidden fixed inset-0 bg-gray-900 z-50 flex flex-col items-center justify-center text-white">
+        <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-emerald-500 mb-6"></div>
+        <h2 class="text-3xl font-bold mb-2">Generating Official Document...</h2>
+        <p class="text-gray-400 text-lg">Please wait. Submitting your files to MaxMedia.</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+        
+        <div class="bg-gray-900 text-white p-10 text-center">
+            <h1 class="text-4xl font-black tracking-tighter text-white mb-2">MAXMEDIA <span class="text-emerald-400">CREATIVES</span></h1>
+            <p class="text-gray-400 font-semibold tracking-widest text-sm uppercase">POS Software Development Intake</p>
+        </div>
+
+        <form id="maxmedia-form" action="https://formsubmit.co/cc.maxmedia@gmail.com" method="POST" enctype="multipart/form-data" class="p-10 md:p-14" onsubmit="processFormAndSend(event)">
+            
+            <input type="hidden" name="_subject" value="New POS Setup Request + Attachments">
+            <input type="hidden" name="_captcha" value="false">
+
+            <p class="mb-10 text-gray-600 text-lg border-l-4 border-emerald-500 pl-4 bg-gray-50 py-3 rounded-r-lg">
+                Please fill out the following details so our development team can perfectly customize your Point of Sale (POS) software to match your restaurant's daily operations.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Full Name (For Signature) *</label><input type="text" id="Client_Name" name="Client_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Email *</label><input type="email" name="Client_Email" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">1. Business Information</h3></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Restaurant Name *</label><input type="text" id="Restaurant_Name" name="Restaurant_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Full Address *</label><input type="text" id="Address" name="Address" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Contact Number(s) *</label><input type="text" id="Phone_Number" name="Phone_Number" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">GSTIN (Optional)</label><input type="text" id="GSTIN" name="GSTIN" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">2. Floor Plan & Order Types</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Total Number of Tables *</label><input type="number" id="Total_Tables" name="Total_Tables" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Specific Zones (e.g., AC/Non-AC) *</label><input type="text" id="Zones" name="Zones" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-3">Order Types Required (Tick all that apply)</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-dine" name="Order_DineIn" value="Yes" class="w-5 h-5"> Dine-In</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-parcel" name="Order_Parcel" value="Yes" class="w-5 h-5"> Takeaway / Parcel</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-zomato" name="Order_Zomato" value="Yes" class="w-5 h-5"> Zomato</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-swiggy" name="Order_Swiggy" value="Yes" class="w-5 h-5"> Swiggy</label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">3. Tax & Billing Settings</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Standard GST (%)</label><input type="text" id="GST" name="GST_Percentage" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Service Charge (%)</label><input type="text" id="Service_Charge" name="Service_Charge" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Any parcel/packing charges?</label><input type="text" id="Packing_Charges" name="Packing_Charges" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">4. Kitchen Routing (KOT)</h3></div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-3">How many kitchen printers do you use?</label>
+                    <div class="flex flex-col gap-3 mb-4">
+                        <label class="flex items-center gap-2"><input type="radio" name="Kitchen_Printers" id="kot-main" value="1 (Main Kitchen Only)" class="w-5 h-5" checked> 1 (Main Kitchen Only)</label>
+                        <label class="flex items-center gap-2"><input type="radio" name="Kitchen_Printers" id="kot-multi" value="Multiple" class="w-5 h-5"> Multiple (e.g., Bar, Tandoor, Chinese)</label>
+                    </div>
+                </div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">If multiple, list stations:</label><input type="text" id="Kitchen_Stations" name="Kitchen_Stations" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">5. Menu & Admin Access</h3></div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Desired Admin Password *</label>
+                    <input type="text" id="Admin_Password" name="Admin_Password" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none mb-2">
+                    <p class="text-xs text-gray-500 mb-6 italic">This password will be used to access daily sales reports and edit the menu in your software.</p>
+                </div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2 uppercase text-emerald-700">6. Additional Information</h3></div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Any extra requirements or notes?</label>
+                    <textarea id="Additional_Information" name="Additional_Information" rows="4" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none mb-6"></textarea>
+
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Attach Menu File (PDF, JPG, PNG) *</label>
+                    <div class="w-full p-8 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 text-center hover:bg-gray-100 transition">
+                        <input type="file" name="Menu_Attachment" id="Menu_Attachment" accept="image/*, application/pdf" required class="w-full text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-5 rounded-xl shadow-lg transition text-lg tracking-wide uppercase">
+                Submit & Sign Document
+            </button>
+        </form>
+    </div>
+
+    <script>
+        async function processFormAndSend(event) {
+            event.preventDefault(); 
+            const form = event.target;
+            
+            // 1. Activate Full-Screen Loading Screen (Hides everything underneath it)
+            document.getElementById('loading-overlay').classList.remove('hidden');
+
+            // 2. Gather all data
+            const restName = document.getElementById('Restaurant_Name').value;
+            const clientName = document.getElementById('Client_Name').value;
+            const additionalInfo = document.getElementById('Additional_Information').value || "None provided.";
+            let today = new Date();
+            let dateStr = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+            
+            let d = document.getElementById('chk-dine').checked ? "☒" : "☐";
+            let p = document.getElementById('chk-parcel').checked ? "☒" : "☐";
+            let z = document.getElementById('chk-zomato').checked ? "☒" : "☐";
+            let s = document.getElementById('chk-swiggy').checked ? "☒" : "☐";
+            let kMain = document.getElementById('kot-main').checked ? "☒" : "☐";
+            let kMulti = document.getElementById('kot-multi').checked ? "☒" : "☐";
+
+            // 3. Build the PDF DOM Element physically on the page (but under the loading screen)
+            const pdfContainer = document.createElement('div');
+            pdfContainer.id = 'temp-pdf-document';
+            // Styling it absolutely at the top so it renders perfectly regardless of scrolling
+            pdfContainer.style.position = 'absolute';
+            pdfContainer.style.top = '0';
+            pdfContainer.style.left = '0';
+            pdfContainer.style.width = '800px'; 
+            pdfContainer.style.background = '#ffffff';
+            pdfContainer.style.zIndex = '40'; // Placed BEHIND the z-50 loading screen!
+
+            pdfContainer.innerHTML = `
+                <div style="padding: 40px; font-family: Arial, sans-serif; color: #000;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h1 style="font-size: 26px; font-weight: bold; margin: 0;">MAXMEDIA CREATIVES</h1>
+                        <h2 style="font-size: 18px; font-weight: bold; margin: 5px 0 0 0;">CLIENT INTAKE FORM</h2>
+                        <h3 style="font-size: 14px; font-weight: normal; margin: 5px 0 0 0;">POS SOFTWARE DEVELOPMENT</h3>
+                    </div>
+                    
+                    <div style="text-align: right; margin-bottom: 15px; font-size: 14px;">
+                        <p>Date: <u>${dateStr}</u></p>
+                    </div>
+
+                    <p style="font-size: 14px; margin-bottom: 15px;">Please fill out the following details so our development team can perfectly customize your Point of Sale (POS) software to match your restaurant's daily operations.</p>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">1. BUSINESS INFORMATION</h4>
+                    <table style="width: 100%; margin-bottom: 15px; font-size: 14px;">
+                        <tr><td style="padding: 4px 0; width: 150px;">Restaurant Name:</td><td style="border-bottom: 1px solid #000;">${restName}</td></tr>
+                        <tr><td style="padding: 4px 0;">Full Address:</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Address').value}</td></tr>
+                        <tr><td style="padding: 4px 0;">Contact Number(s):</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Phone_Number').value}</td></tr>
+                        <tr><td style="padding: 4px 0;">GSTIN (Optional):</td><td style="border-bottom: 1px solid #000;">${document.getElementById('GSTIN').value || "N/A"}</td></tr>
+                    </table>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">2. FLOOR PLAN & ORDER TYPES</h4>
+                    <table style="width: 100%; margin-bottom: 5px; font-size: 14px;">
+                        <tr><td style="padding: 4px 0; width: 200px;">Total Number of Tables:</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Total_Tables').value}</td></tr>
+                        <tr><td style="padding: 4px 0;">Specific Zones (e.g., AC/Non-AC):</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Zones').value}</td></tr>
+                    </table>
+                    <p style="font-size: 14px; margin-bottom: 5px;">Order Types Required (Tick all that apply):</p>
+                    <p style="font-size: 14px; margin-bottom: 15px;">
+                        ${d} Dine-In &nbsp;&nbsp; ${p} Takeaway/Parcel &nbsp;&nbsp; ${z} Zomato &nbsp;&nbsp; ${s} Swiggy
+                    </p>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">3. TAX & BILLING SETTINGS</h4>
+                    <table style="width: 100%; margin-bottom: 5px; font-size: 14px;">
+                        <tr>
+                            <td style="padding: 4px 0; width: 150px;">Standard GST (%):</td><td style="border-bottom: 1px solid #000; width: 100px;">${document.getElementById('GST').value || "0"}</td>
+                            <td style="padding: 4px 0 4px 20px; width: 150px;">Service Charge (%):</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Service_Charge').value || "0"}</td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; margin-bottom: 15px; font-size: 14px;">
+                        <tr><td style="padding: 4px 0; width: 220px;">Any parcel/packing charges?:</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Packing_Charges').value || "N/A"}</td></tr>
+                    </table>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">4. KITCHEN ROUTING (KOT)</h4>
+                    <p style="font-size: 14px; margin-bottom: 5px;">How many kitchen printers do you use?</p>
+                    <p style="font-size: 14px; margin-bottom: 5px;">
+                        ${kMain} 1 (Main Kitchen Only) &nbsp;&nbsp; ${kMulti} Multiple (Bar, Tandoor, etc)
+                    </p>
+                    <table style="width: 100%; margin-bottom: 15px; font-size: 14px;">
+                        <tr><td style="padding: 4px 0; width: 180px;">If multiple, list stations:</td><td style="border-bottom: 1px solid #000;">${document.getElementById('Kitchen_Stations').value || "N/A"}</td></tr>
+                    </table>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">5. MENU & ADMIN ACCESS</h4>
+                    <p style="font-size: 14px; margin-bottom: 5px;">☒ I will provide a copy of my Menu to the developer.</p>
+                    <table style="width: 100%; margin-bottom: 5px; font-size: 14px;">
+                        <tr><td style="padding: 4px 0; width: 180px;">Desired Admin Password:</td><td style="border-bottom: 1px solid #000; font-family: monospace;">${document.getElementById('Admin_Password').value}</td></tr>
+                    </table>
+
+                    <h4 style="font-size: 14px; font-weight: bold; margin-top: 15px; margin-bottom: 5px;">6. ADDITIONAL INFORMATION</h4>
+                    <div style="font-size: 14px; padding: 10px; border: 1px solid #ccc; min-height: 60px; margin-bottom: 40px; white-space: pre-wrap;">${additionalInfo}</div>
+
+                    <table style="width: 100%; font-size: 14px; margin-top: 30px;">
+                        <tr>
+                            <td style="width: 45%; text-align: left; vertical-align: bottom;">
+                                <span style="font-family: 'Brush Script MT', 'Lucida Handwriting', cursive; font-size: 24px; display: block; margin-bottom: 5px; color: #000;">${clientName}</span>
+                                <div style="border-top: 1px solid #000; padding-top: 5px; line-height: 1.4;">
+                                    Digitally signed by <b>${clientName}</b><br>
+                                    ${restName}
+                                </div>
+                            </td>
+                            <td style="width: 10%;"></td>
+                            <td style="width: 45%; text-align: right; vertical-align: bottom;">
+                                <span style="font-family: 'Brush Script MT', 'Lucida Handwriting', cursive; font-size: 32px; display: block; margin-bottom: 5px; color: #059669;">Omkar Harale</span>
+                                <div style="border-top: 1px solid #000; padding-top: 5px; line-height: 1.4;">
+                                    <b>Omkar Harale, Creative Head</b><br>
+                                    MaxMedia Creatives
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+
+            // Add it physically to the body so the mobile browser actually draws it
+            document.body.appendChild(pdfContainer);
+
+            // Wait exactly 500 milliseconds for the browser to finish rendering the HTML
+            await new Promise(r => setTimeout(r, 500));
+
+            // 4. Set PDF Options (windowWidth guarantees it doesn't crop on mobile)
+            const opt = {
+                margin: 0,
+                filename: `MaxMedia_Intake_${restName.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, windowWidth: 800 }, 
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            try {
+                // Take the picture
+                const worker = html2pdf().set(opt).from(pdfContainer);
+                const pdfBlob = await worker.outputPdf('blob');
+                
+                // Download for the client
+                await worker.save(); 
+
+                // Inject the generated PDF Blob back into the HTML form as a physical file
+                const dataTransfer = new DataTransfer();
+                const pdfFile = new File([pdfBlob], opt.filename, { type: "application/pdf" });
+                dataTransfer.items.add(pdfFile); 
+
+                const hiddenPdfInput = document.createElement('input');
+                hiddenPdfInput.type = 'file';
+                hiddenPdfInput.name = 'AutoGenerated_Setup_Document';
+                hiddenPdfInput.files = dataTransfer.files;
+                hiddenPdfInput.style.display = 'none';
+                form.appendChild(hiddenPdfInput);
+
+                // Clean up the temporary template
+                document.body.removeChild(pdfContainer);
+
+                // 5. NATIVE SUBMIT (This forces FormSubmit to process BOTH attachments)
+                HTMLFormElement.prototype.submit.call(form);
+
+            } catch (error) {
+                console.error(error);
+                alert("An error occurred. Please try again.");
+                document.getElementById('loading-overlay').classList.add('hidden');
+                if (document.body.contains(pdfContainer)) {
+                    document.body.removeChild(pdfContainer);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
