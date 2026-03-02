@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Onboarding | MaxMedia Creatives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900 min-h-screen py-10 px-4">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+        
+        <div class="bg-gray-900 text-white p-10 text-center relative overflow-hidden">
+            <h1 class="text-4xl font-black tracking-tighter text-white mb-2">MAXMEDIA <span class="text-emerald-400">CREATIVES</span></h1>
+            <p class="text-gray-400 font-semibold tracking-widest text-sm uppercase">POS Software Setup Portal</p>
+        </div>
+
+        <form id="maxmedia-form" class="p-10 md:p-14" onsubmit="processFormAndSend(event)">
+            
+            <input type="hidden" name="_subject" value="New POS Setup Request + Attachments">
+            <input type="hidden" name="_captcha" value="false">
+
+            <p class="mb-10 text-gray-600 text-lg border-l-4 border-emerald-500 pl-4 bg-gray-50 py-3 rounded-r-lg">
+                Welcome to the MaxMedia setup portal. Please fill out your details. Once submitted, your Setup Document will auto-download, and our team will receive your files.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div class="md:col-span-2"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2">1. Point of Contact</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Full Name *</label><input type="text" id="Client_Name" name="Client_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Your Email *</label><input type="email" id="Client_Email" name="Client_Email" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2">2. Restaurant Information</h3></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Restaurant Name *</label><input type="text" id="Restaurant_Name" name="Restaurant_Name" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div class="md:col-span-2"><label class="block text-sm font-bold text-gray-700 mb-2">Full Address *</label><input type="text" id="Address" name="Address" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Contact Number *</label><input type="tel" id="Phone_Number" name="Phone_Number" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Standard GST %</label><input type="number" id="GST" name="GST_Percentage" placeholder="e.g. 5" class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2">3. Operations & Setup</h3></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Total Number of Tables *</label><input type="number" id="Total_Tables" name="Total_Tables" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                <div><label class="block text-sm font-bold text-gray-700 mb-2">Desired Admin Password *</label><input type="text" id="Admin_Password" name="Admin_Password" required class="w-full p-3 rounded bg-gray-50 border border-gray-300 focus:border-emerald-500 outline-none"></div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-3">Required Features</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-dine" name="Features" value="Dine-In" class="w-5 h-5"> Dine-In</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-parcel" name="Features" value="Parcel" class="w-5 h-5"> Parcel/Takeaway</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-zomato" name="Features" value="Delivery" class="w-5 h-5"> Swiggy/Zomato</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="chk-kot" name="Features" value="KOT" class="w-5 h-5"> Kitchen Printers</label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 mt-4"><h3 class="text-xl font-bold text-gray-800 border-b-2 border-gray-100 pb-2">4. Upload Your Menu</h3></div>
+                <div class="md:col-span-2 mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Attach Menu File (PDF, JPG, PNG) *</label>
+                    <div class="w-full p-8 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 text-center hover:bg-gray-100 transition">
+                        <input type="file" name="Menu_Attachment" accept="image/png, image/jpeg, application/pdf" required class="w-full text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-5 rounded-xl shadow-lg transition text-lg tracking-wide uppercase">
+                Generate Document & Submit
+            </button>
+        </form>
+
+        <div id="success-screen" class="hidden p-10 md:p-20 text-center">
+            <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Request Successfully Sent!</h2>
+            <p class="text-gray-600 text-lg mb-8">Your Menu and details have been sent to MaxMedia Creatives.</p>
+            <div class="bg-gray-50 border-2 border-dashed border-gray-300 p-8 rounded-xl inline-block">
+                <p class="font-bold text-emerald-600 mb-2">Check your downloads folder!</p>
+                <p class="text-sm text-gray-500">A PDF copy of your Setup Manifest has been downloaded for your records.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="pdf-template" class="hidden bg-white text-black p-12" style="width: 800px; font-family: sans-serif;">
+        <div style="border-bottom: 4px solid #111827; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <h1 style="font-size: 32px; font-weight: 900; margin: 0; color: #111827;">MAXMEDIA <span style="color: #059669;">CREATIVES</span></h1>
+                <p style="font-size: 12px; font-weight: bold; letter-spacing: 2px; margin: 5px 0 0 0; color: #6b7280;">POS SYSTEM SETUP MANIFEST</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; color: #4b5563; font-size: 14px;">Generated: <span id="pdf-date"></span></p>
+            </div>
+        </div>
+
+        <h3 style="background: #f3f4f6; padding: 10px; border-left: 5px solid #059669; margin-bottom: 20px;">1. Client Details</h3>
+        <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+            <tr><td style="padding: 8px; font-weight: bold; width: 30%;">Name:</td><td id="pdf-name" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Email:</td><td id="pdf-email" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+        </table>
+
+        <h3 style="background: #f3f4f6; padding: 10px; border-left: 5px solid #059669; margin-bottom: 20px;">2. Business Details</h3>
+        <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+            <tr><td style="padding: 8px; font-weight: bold; width: 30%;">Restaurant Name:</td><td id="pdf-restName" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Full Address:</td><td id="pdf-restAddress" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Contact Number:</td><td id="pdf-restPhone" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Standard GST:</td><td id="pdf-restGST" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+        </table>
+
+        <h3 style="background: #f3f4f6; padding: 10px; border-left: 5px solid #059669; margin-bottom: 20px;">3. Technical Configuration</h3>
+        <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+            <tr><td style="padding: 8px; font-weight: bold; width: 30%;">Total Tables:</td><td id="pdf-restTables" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold;">Admin Password:</td><td id="pdf-restPassword" style="padding: 8px; border-bottom: 1px dotted #ccc; font-family: monospace;"></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; vertical-align: top;">Required Features:</td><td id="pdf-features" style="padding: 8px; border-bottom: 1px dotted #ccc;"></td></tr>
+        </table>
+        
+        <div style="margin-top: 50px; text-align: center; color: #6b7280; font-size: 14px;">
+            <p>Official Document - Sent electronically to MaxMedia Creatives</p>
+        </div>
+    </div>
+
+    <script>
+        async function processFormAndSend(event) {
+            event.preventDefault(); // Stop default form submission
+            
+            const form = event.target;
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Processing Files... Please Wait";
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            btn.disabled = true;
+
+            // 1. POPULATE THE PDF TEMPLATE
+            const restName = document.getElementById('Restaurant_Name').value;
+            document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
+            document.getElementById('pdf-name').innerText = document.getElementById('Client_Name').value;
+            document.getElementById('pdf-email').innerText = document.getElementById('Client_Email').value;
+            document.getElementById('pdf-restName').innerText = restName;
+            document.getElementById('pdf-restAddress').innerText = document.getElementById('Address').value;
+            document.getElementById('pdf-restPhone').innerText = document.getElementById('Phone_Number').value;
+            document.getElementById('pdf-restGST').innerText = document.getElementById('GST').value ? document.getElementById('GST').value + '%' : 'N/A';
+            document.getElementById('pdf-restTables').innerText = document.getElementById('Total_Tables').value;
+            document.getElementById('pdf-restPassword').innerText = document.getElementById('Admin_Password').value;
+
+            let features = [];
+            if(document.getElementById('chk-dine').checked) features.push("Dine-In");
+            if(document.getElementById('chk-parcel').checked) features.push("Parcel");
+            if(document.getElementById('chk-zomato').checked) features.push("Swiggy/Zomato");
+            if(document.getElementById('chk-kot').checked) features.push("Kitchen Printers");
+            document.getElementById('pdf-features').innerText = features.length > 0 ? features.join(', ') : 'None selected';
+
+            // 2. GENERATE PDF
+            const element = document.getElementById('pdf-template');
+            element.classList.remove('hidden'); // Briefly unhide to capture
+
+            const opt = {
+                margin: 0,
+                filename: `MaxMedia_Setup_${restName.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Download for the client
+            html2pdf().set(opt).from(element).save();
+
+            // Convert to a File/Blob to send to your email
+            const pdfBlob = await html2pdf().set(opt).from(element).outputPdf('blob');
+            element.classList.add('hidden'); // Hide template again
+
+            // 3. PACKAGE EVERYTHING & SEND TO GMAIL
+            // We use the AJAX version of the URL to send silently in the background
+            const formData = new FormData(form);
+            formData.append("Setup_Document_PDF", pdfBlob, opt.filename); // Attach generated PDF
+
+            try {
+                const response = await fetch("https://formsubmit.co/ajax/cc.maxmedia@gmail.com", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // 4. SHOW SUCCESS SCREEN
+                    document.getElementById('maxmedia-form').classList.add('hidden');
+                    document.getElementById('success-screen').classList.remove('hidden');
+                } else {
+                    alert("Submission failed. Please try again.");
+                    btn.innerText = "Generate Document & Submit";
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Network error. Please try again.");
+                btn.innerText = "Generate Document & Submit";
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+    </script>
+</body>
+</html>
